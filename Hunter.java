@@ -101,7 +101,6 @@ public class Hunter {
             kit[idx] = item;
             return true;
         }
-
         return false;
     }
 
