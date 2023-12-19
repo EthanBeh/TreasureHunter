@@ -16,6 +16,7 @@ public class TreasureHunter {
     private Town currentTown;
     private Hunter hunter;
     private boolean hardMode;
+    private boolean easyMode;
 
     /**
      * Constructs the Treasure Hunter game.
@@ -25,6 +26,7 @@ public class TreasureHunter {
         currentTown = null;
         hunter = null;
         hardMode = false;
+        easyMode = false;
     }
 
     /**
@@ -35,6 +37,7 @@ public class TreasureHunter {
         enterTown();
         showMenu();
     }
+
 
     /**
      * Creates a hunter object at the beginning of the game and populates the class member variable with it.
@@ -48,10 +51,13 @@ public class TreasureHunter {
         // set hunter instance variable
         hunter = new Hunter(name, 10);
 
-        System.out.print("Hard mode? (y/n): ");
+        System.out.print("Difficulty? (e/n/h) ");
         String hard = SCANNER.nextLine().toLowerCase();
-        if (hard.equals("y")) {
+        if (hard.equals("h")) {
             hardMode = true;
+        } if (hard.equals("e")) {
+            easyMode = true;
+            hunter.changeGold(10);
         } else if (hard.equals("test")) {
             hunter.changeGold(90);
             String[] available = {"Water", "Rope", "Machete", "Horse", "Boat", "Boots"};
@@ -73,6 +79,9 @@ public class TreasureHunter {
 
             // and the town is "tougher"
             toughness = 0.75;
+        } if (easyMode) {
+            markdown = 0;
+            toughness = 0;
         }
 
         // note that we don't need to access the Shop object
@@ -84,6 +93,9 @@ public class TreasureHunter {
         // variable in this class, since we need to access the Town
         // object in other methods of this class
         currentTown = new Town(shop, toughness);
+        if (easyMode) {
+            currentTown.setBreakChance();
+        }
 
         // calling the hunterArrives method, which takes the Hunter
         // as a parameter; note this also could have been done in the
