@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class TreasureHunter {
     // static variables
     private static final Scanner SCANNER = new Scanner(System.in);
-
+    public static boolean gameOver = false;
     // instance variables
     private Town currentTown;
     private Hunter hunter;
@@ -100,7 +100,7 @@ public class TreasureHunter {
     private void showMenu() {
         String choice = "";
 
-        while (!choice.equals("x")) {
+        while (!choice.equals("x") && !gameOver) {
             System.out.println();
             System.out.println(currentTown.getLatestNews());
             System.out.println("***");
@@ -148,6 +148,10 @@ public class TreasureHunter {
             }
         } else {
             System.out.println("Yikes! That's an invalid option! Try again.");
+        }
+        if (gameOver) {
+            System.out.println(currentTown.getLatestNews());
+            System.out.println("Game over!\nFare thee well, " + hunter.getHunterName() + "!");
         }
     }
 }
