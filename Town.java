@@ -5,12 +5,16 @@
  */
 
 public class Town {
+    public static String[] treasureList = {"crown", "trophy", "gem", "dust"};
+
     // instance variables
     private Hunter hunter;
     private Shop shop;
     private Terrain terrain;
     private String printMessage;
     private boolean toughTown;
+    private String treasure;
+    private boolean hasTreasure;
 
     /**
      * The Town Constructor takes in a shop and the surrounding terrain, but leaves the hunter as null until one arrives.
@@ -30,6 +34,22 @@ public class Town {
 
         // higher toughness = more likely to be a tough town
         toughTown = (Math.random() < toughness);
+    }
+    //second constructor to prevent errors
+    public Town(Shop shop, double toughness, String treasure) {
+        this.shop = shop;
+        this.terrain = getNewTerrain();
+
+        // the hunter gets set using the hunterArrives method, which
+        // gets called from a client class
+        hunter = null;
+
+        printMessage = "";
+
+        // higher toughness = more likely to be a tough town
+        toughTown = (Math.random() < toughness);
+        this.treasure = treasure;
+        hasTreasure = true;
     }
 
     public String getLatestNews() {
@@ -111,6 +131,24 @@ public class Town {
                 hunter.changeGold(-goldDiff);
             }
         }
+    }
+
+    public boolean lookForTreasure(Hunter h) {
+        if (hasTreasure) {
+            if (!h.hasTreasure(treasure)) {
+                h.addTreasure(treasure);
+                hasTreasure = false;
+                return true;
+            }
+        } return false;
+    }
+
+    public String getTreasure() {
+        return treasure;
+    }
+
+    public boolean hasTreasure() {
+        return hasTreasure;
     }
 
     public String toString() {

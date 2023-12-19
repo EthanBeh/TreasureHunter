@@ -74,16 +74,16 @@ public class TreasureHunter {
             // and the town is "tougher"
             toughness = 0.75;
         }
-
         // note that we don't need to access the Shop object
         // outside of this method, so it isn't necessary to store it as an instance
         // variable; we can leave it as a local variable
         Shop shop = new Shop(markdown);
 
+        String treasure = Town.treasureList[(int) (Math.random() * 4)];
         // creating the new Town -- which we need to store as an instance
         // variable in this class, since we need to access the Town
         // object in other methods of this class
-        currentTown = new Town(shop, toughness);
+        currentTown = new Town(shop, toughness, treasure);
 
         // calling the hunterArrives method, which takes the Hunter
         // as a parameter; note this also could have been done in the
@@ -110,6 +110,7 @@ public class TreasureHunter {
             System.out.println("(S)ell something at the shop.");
             System.out.println("(M)ove on to a different town.");
             System.out.println("(L)ook for trouble!");
+            System.out.println("(H)unt for treasure!");
             System.out.println("Give up the hunt and e(X)it.");
             System.out.println();
             System.out.print("What's your next move? ");
@@ -135,6 +136,16 @@ public class TreasureHunter {
             currentTown.lookForTrouble();
         } else if (choice.equals("x")) {
             System.out.println("Fare thee well, " + hunter.getHunterName() + "!");
+        } else if (choice.equals("h")) {
+            if (currentTown.lookForTreasure(hunter) == true) {
+                System.out.println("You found a " + currentTown.getTreasure() + "!");
+            } else {
+                if (!currentTown.hasTreasure()) {
+                    System.out.println("You have already searched this town");
+                } else {
+                    System.out.println("You found a " + currentTown.getTreasure() + "\nBut... you already have one!");
+                }
+            }
         } else {
             System.out.println("Yikes! That's an invalid option! Try again.");
         }

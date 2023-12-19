@@ -9,6 +9,7 @@ public class Hunter {
     private String hunterName;
     private String[] kit;
     private int gold;
+    private String[] treasure;
 
     /**
      * The base constructor of a Hunter assigns the name to the hunter and an empty kit.
@@ -20,6 +21,7 @@ public class Hunter {
         this.hunterName = hunterName;
         kit = new String[5]; // only 5 possible items can be stored in kit
         gold = startingGold;
+        treasure = new String[3];
     }
 
     //Accessors
@@ -149,6 +151,25 @@ public class Hunter {
             str += " and " + getInventory();
         }
         return str;
+    }
+
+    public void addTreasure(String treas) {
+        if (treas.equals("crown")) {
+            treasure[0] = treas;
+        } else if (treas.equals("trophy")) {
+            treasure[1] = treas;
+        } else if (treas.equals("gem")) {
+            treasure[2] = treas;
+        }
+    }
+
+    public boolean hasTreasure(String treas) {
+        for (String t: treasure) {
+            if (t != null && t.equals(treas)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
