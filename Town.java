@@ -84,7 +84,7 @@ public class Town {
             printMessage = "You used your " + Colors.PURPLE + item + Colors.RESET + " to cross the " + Colors.CYAN + terrain.getTerrainName() + Colors.RESET +  ".";
             if (checkItemBreak()) {
                 hunter.removeItemFromKit(item);
-                printMessage += "\nUnfortunately, your " + Colors.PURPLE + item + Colors.RESET + " broke.";
+                printMessage += "\nUnfortunately, you lost your " + Colors.PURPLE + item + Colors.RESET;
             }
 
             return true;
@@ -101,6 +101,7 @@ public class Town {
      */
     public void enterShop(String choice) {
         shop.enter(hunter, choice);
+        printMessage = "You left the shop";
     }
 
     /**
@@ -161,7 +162,7 @@ public class Town {
      * @return A Terrain object.
      */
     private Terrain getNewTerrain() {
-        double rnd = Math.random();
+        double rnd = Math.random() * 1.2;
         if (rnd < .2) {
             return new Terrain("Mountains", "Rope");
         } else if (rnd < .4) {
@@ -170,8 +171,10 @@ public class Town {
             return new Terrain("Plains", "Horse");
         } else if (rnd < .8) {
             return new Terrain("Desert", "Water");
-        } else {
+        } else if (rnd < 1) {
             return new Terrain("Jungle", "Machete");
+        } else {
+            return new Terrain("Marsh", "Boots");
         }
     }
 
