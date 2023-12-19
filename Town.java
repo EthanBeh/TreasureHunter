@@ -64,7 +64,7 @@ public class Town {
             printMessage = "You used your " + Colors.PURPLE + item + Colors.RESET + " to cross the " + Colors.CYAN + terrain.getTerrainName() + Colors.RESET +  ".";
             if (checkItemBreak()) {
                 hunter.removeItemFromKit(item);
-                printMessage += "\nUnfortunately, your " + Colors.PURPLE + item + Colors.RESET + " broke.";
+                printMessage += "\nUnfortunately, you lost your " + Colors.PURPLE + item + Colors.RESET;
             }
 
             return true;
@@ -81,6 +81,7 @@ public class Town {
      */
     public void enterShop(String choice) {
         shop.enter(hunter, choice);
+        printMessage = "You left the shop";
     }
 
     /**
