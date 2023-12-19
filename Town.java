@@ -15,6 +15,7 @@ public class Town {
     private boolean toughTown;
     private String treasure;
     private boolean hasTreasure;
+    private double breakChance;
 
     /**
      * The Town Constructor takes in a shop and the surrounding terrain, but leaves the hunter as null until one arrives.
@@ -31,6 +32,8 @@ public class Town {
         hunter = null;
 
         printMessage = "";
+
+        breakChance = 0;
 
         // higher toughness = more likely to be a tough town
         toughTown = (Math.random() < toughness);
@@ -54,6 +57,10 @@ public class Town {
 
     public String getLatestNews() {
         return printMessage;
+    }
+
+    public void setBreakChance() {
+        breakChance = 1;
     }
 
     /**
@@ -184,7 +191,11 @@ public class Town {
      * @return true if the item broke.
      */
     private boolean checkItemBreak() {
-        double rand = Math.random();
-        return (rand < 0.5);
+        if (breakChance != 1){
+            double rand = Math.random();
+            return (rand < 0.5);
+        } else {
+            return true;
+        }
     }
 }
