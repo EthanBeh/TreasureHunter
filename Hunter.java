@@ -177,6 +177,15 @@ public class Hunter {
         return false;
     }
 
+    public boolean hasAllTreasures() {
+        for (String t: treasure) {
+            if (t == null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * Searches kit Array for the index of the specified value.
      *
