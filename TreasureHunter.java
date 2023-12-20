@@ -118,6 +118,17 @@ public class TreasureHunter {
             System.out.println(currentTown.getLatestNews());
             System.out.println("***");
             System.out.println(hunter);
+            System.out.print("Treasures found: ");
+            String found = "";
+            for (String treasure: hunter.getTreasures()) {
+                if (treasure != null) {
+                    found += "a " + treasure + ", ";
+                }
+            } if (found == "") {
+                System.out.println("none");
+            } else {
+                System.out.println(found.substring(0, found.length()-2));
+            }
             System.out.println(currentTown);
             System.out.println("(B)uy something at the shop.");
             System.out.println("(S)ell something at the shop.");
