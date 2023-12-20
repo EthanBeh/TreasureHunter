@@ -151,7 +151,12 @@ public class TreasureHunter {
             System.out.println("Fare thee well, " + hunter.getHunterName() + "!");
         } else if (choice.equals("h")) {
             if (currentTown.lookForTreasure(hunter) == true) {
-                System.out.println("You found a " + currentTown.getTreasure() + "!");
+                if (hunter.hasAllTreasures()) {
+                    gameOver = true;
+                    System.out.println("You found a " + currentTown.getTreasure() + "!\nCongratulations, you have found the last of the three treasures! You win!");
+                } else {
+                    System.out.println("You found a " + currentTown.getTreasure() + "!");
+                }
             } else {
                 if (!currentTown.hasTreasure()) {
                     System.out.println("You have already searched this town");
@@ -162,7 +167,7 @@ public class TreasureHunter {
         } else {
             System.out.println("Yikes! That's an invalid option! Try again.");
         }
-        if (gameOver) {
+        if (gameOver && !hunter.hasAllTreasures()) {
             System.out.println(currentTown.getLatestNews());
             System.out.println("Game over!\nFare thee well, " + hunter.getHunterName() + "!");
         }
