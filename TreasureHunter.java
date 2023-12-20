@@ -92,7 +92,7 @@ public class TreasureHunter {
         // creating the new Town -- which we need to store as an instance
         // variable in this class, since we need to access the Town
         // object in other methods of this class
-        currentTown = new Town(shop, toughness);
+        currentTown = new Town(shop, toughness, treasure);
         if (easyMode) {
             currentTown.setBreakChance();
         }
