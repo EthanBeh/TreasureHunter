@@ -71,16 +71,16 @@ public class TreasureHunter {
      * Creates a new town and adds the Hunter to it.
      */
     private void enterTown() {
-        double markdown = 0.25;
+        double markdown = 0.5;
         double toughness = 0.4;
         if (hardMode) {
             // in hard mode, you get less money back when you sell items
-            markdown = 0.5;
+            markdown = 0.25;
 
             // and the town is "tougher"
             toughness = 0.75;
         } if (easyMode) {
-            markdown = 0;
+            markdown = 1;
             toughness = 0;
         }
         // note that we don't need to access the Shop object
