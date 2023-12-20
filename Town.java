@@ -16,6 +16,7 @@ public class Town {
     private String treasure;
     private boolean hasTreasure;
     private double breakChance;
+    private boolean dug;
 
     /**
      * The Town Constructor takes in a shop and the surrounding terrain, but leaves the hunter as null until one arrives.
@@ -53,6 +54,7 @@ public class Town {
         toughTown = (Math.random() < toughness);
         this.treasure = treasure;
         hasTreasure = true;
+        dug = false;
     }
 
     public String getLatestNews() {
@@ -157,6 +159,22 @@ public class Town {
 
     public boolean hasTreasure() {
         return hasTreasure;
+    }
+
+    public int dig() {
+        printMessage = "";
+        if (!dug) {
+            dug = true;
+            if (hunter.hasShovel()) {
+                if (Math.random() >= 0.5) {
+                    return (int) (Math.random() * 20) + 1;
+                } return -1;
+            } return -2;
+        } return 0;
+    }
+
+    public boolean isDug() {
+        return dug;
     }
 
     public String toString() {

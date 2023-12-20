@@ -124,6 +124,7 @@ public class TreasureHunter {
             System.out.println("(M)ove on to a different town.");
             System.out.println("(L)ook for trouble!");
             System.out.println("(H)unt for treasure!");
+            System.out.println("(D)ig for gold!");
             System.out.println("Give up the hunt and e(X)it.");
             System.out.println();
             System.out.print("What's your next move? ");
@@ -162,6 +163,25 @@ public class TreasureHunter {
                     System.out.println("You have already searched this town");
                 } else {
                     System.out.println("You found a " + currentTown.getTreasure() + "\nBut... you already have one!");
+                }
+            }
+        } else if (choice.equals("d")) {
+            int earned = currentTown.dig();
+            if (earned != 0 && earned != -1) {
+                System.out.println("You found " + earned + " gold");
+            } else {
+                if (hunter.hasShovel()) {
+                    if (earned == -1) {
+                        System.out.println("You dug but only found dirt");
+                    } else {
+                        if (currentTown.isDug()) {
+                            System.out.println("You've already dug in this town");
+                        }
+                    }
+                } else {
+                    if (earned == -2) {
+                        System.out.println("You need a shovel to dig!");
+                    }
                 }
             }
         } else {

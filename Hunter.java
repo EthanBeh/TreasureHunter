@@ -182,6 +182,14 @@ public class Hunter {
         return true;
     }
 
+    public boolean hasShovel() {
+        for (String item: kit) {
+            if (item.equals("shovel")) {
+                return true;
+            }
+        }
+        return false;
+    }
     /**
      * Searches kit Array for the index of the specified value.
      *
