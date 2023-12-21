@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+
 /**
  * This class is responsible for controlling the Treasure Hunter game.<p>
  * It handles the display of the menu and the processing of the player's choices.<p>
@@ -7,6 +8,7 @@ import java.util.Scanner;
  *
  * This code has been adapted from Ivan Turner's original program -- thank you Mr. Turner!
  */
+
 
 public class TreasureHunter {
     // static variables
@@ -17,6 +19,8 @@ public class TreasureHunter {
     private Hunter hunter;
     private boolean hardMode;
     private boolean easyMode;
+    private boolean samuraiMode;
+
 
     /**
      * Constructs the Treasure Hunter game.
@@ -27,7 +31,9 @@ public class TreasureHunter {
         hunter = null;
         hardMode = false;
         easyMode = false;
+        samuraiMode = false;
     }
+
 
     /**
      * Starts the game; this is the only public method
@@ -39,6 +45,8 @@ public class TreasureHunter {
     }
 
 
+
+
     /**
      * Creates a hunter object at the beginning of the game and populates the class member variable with it.
      */
@@ -48,8 +56,10 @@ public class TreasureHunter {
         System.out.print("What's your name, Hunter? ");
         String name = SCANNER.nextLine().toLowerCase();
 
+
         // set hunter instance variable
         hunter = new Hunter(name, 10);
+
 
         System.out.print("Difficulty? (e/n/h) ");
         String hard = SCANNER.nextLine().toLowerCase();
@@ -64,8 +74,11 @@ public class TreasureHunter {
             for (String item: available) {
                 hunter.buyItem(item, 0);
             }
+        } if (hard.equals("s")) {
+            samuraiMode = true;
         }
     }
+
 
     /**
      * Creates a new town and adds the Hunter to it.
@@ -77,6 +90,7 @@ public class TreasureHunter {
             // in hard mode, you get less money back when you sell items
             markdown = 0.25;
 
+
             // and the town is "tougher"
             toughness = 0.75;
         } if (easyMode) {
@@ -87,6 +101,10 @@ public class TreasureHunter {
         // outside of this method, so it isn't necessary to store it as an instance
         // variable; we can leave it as a local variable
         Shop shop = new Shop(markdown);
+        if (samuraiMode) {
+            shop.samuraiMode();
+        }
+
 
         String treasure = Town.treasureList[(int) (Math.random() * 4)];
         // creating the new Town -- which we need to store as an instance
@@ -98,12 +116,15 @@ public class TreasureHunter {
         }
 
 
+
+
         // calling the hunterArrives method, which takes the Hunter
         // as a parameter; note this also could have been done in the
         // constructor for Town, but this illustrates another way to associate
         // an object with an object of a different class
         currentTown.hunterArrives(hunter);
     }
+
 
     /**
      * Displays the menu and receives the choice from the user.<p>
@@ -112,6 +133,7 @@ public class TreasureHunter {
      */
     private void showMenu() {
         String choice = "";
+
 
         while (!choice.equals("x") && !gameOver) {
             System.out.println();
@@ -143,6 +165,7 @@ public class TreasureHunter {
             processChoice(choice);
         }
     }
+
 
     /**
      * Takes the choice received from the menu and calls the appropriate method to carry out the instructions.

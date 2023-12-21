@@ -4,8 +4,10 @@
  * This code has been adapted from Ivan Turner's original program -- thank you Mr. Turner!
  */
 
+
 public class Town {
     public static String[] treasureList = {"crown", "trophy", "gem", "dust"};
+
 
     // instance variables
     private Hunter hunter;
@@ -28,13 +30,17 @@ public class Town {
         this.shop = shop;
         this.terrain = getNewTerrain();
 
+
         // the hunter gets set using the hunterArrives method, which
         // gets called from a client class
         hunter = null;
 
+
         printMessage = "";
 
+
         breakChance = 0;
+
 
         // higher toughness = more likely to be a tough town
         toughTown = (Math.random() < toughness);
@@ -44,11 +50,14 @@ public class Town {
         this.shop = shop;
         this.terrain = getNewTerrain();
 
+
         // the hunter gets set using the hunterArrives method, which
         // gets called from a client class
         hunter = null;
 
+
         printMessage = "";
+
 
         // higher toughness = more likely to be a tough town
         toughTown = (Math.random() < toughness);
@@ -57,13 +66,16 @@ public class Town {
         dug = false;
     }
 
+
     public String getLatestNews() {
         return printMessage;
     }
 
+
     public void setBreakChance() {
         breakChance = 1;
     }
+
 
     /**
      * Assigns an object to the Hunter in town.
@@ -74,12 +86,14 @@ public class Town {
         this.hunter = hunter;
         printMessage = "Welcome to town, " + hunter.getHunterName() + ".";
 
+
         if (toughTown) {
             printMessage += "\nIt's pretty rough around here, so watch yourself.";
         } else {
             printMessage += "\nWe're just a sleepy little town with mild mannered folk.";
         }
     }
+
 
     /**
      * Handles the action of the Hunter leaving the town.
@@ -90,18 +104,24 @@ public class Town {
         boolean canLeaveTown = terrain.canCrossTerrain(hunter);
         if (canLeaveTown) {
             String item = terrain.getNeededItem();
+            if (hunter.hasItemInKit("sword") && terrain.getTerrainName() == "Jungle") {
+                item = "sword";
+            }
             printMessage = "You used your " + Colors.PURPLE + item + Colors.RESET + " to cross the " + Colors.CYAN + terrain.getTerrainName() + Colors.RESET +  ".";
             if (checkItemBreak()) {
                 hunter.removeItemFromKit(item);
                 printMessage += "\nUnfortunately, you lost your " + Colors.PURPLE + item + Colors.RESET;
             }
 
+
             return true;
         }
+
 
         printMessage = "You can't leave town, " + hunter.getHunterName() + ". You don't have a " + Colors.PURPLE + terrain.getNeededItem() + Colors.RESET + ".";
         return false;
     }
+
 
     /**
      * Handles calling the enter method on shop whenever the user wants to access the shop.
@@ -112,6 +132,7 @@ public class Town {
         shop.enter(hunter, choice);
         printMessage = "You left the shop";
     }
+
 
     /**
      * Gives the hunter a chance to fight for some gold.<p>
@@ -126,13 +147,18 @@ public class Town {
             noTroubleChance = 0.33;
         }
 
+
         if (Math.random() > noTroubleChance) {
             printMessage = "You couldn't find any trouble";
         } else {
             printMessage = Colors.RED + "You want trouble, stranger!  You got it!\nOof! Umph! Ow!\n" + Colors.RESET;
             int goldDiff = (int) (Math.random() * 10) + 1;
-            if (Math.random() > noTroubleChance) {
-                printMessage += Colors.BLUE + "Okay, stranger! You proved yer mettle. Here, take my gold." + Colors.RESET;
+            if (Math.random() > noTroubleChance || hunter.hasItemInKit("sword")) {
+                if (hunter.hasItemInKit("sword")) {
+                    printMessage += Colors.BLUE + "Due to censorship, the sword used magic instead to instantly win the brawl." + Colors.RESET;
+                } else {
+                    printMessage += Colors.BLUE + "Okay, stranger! You proved yer mettle. Here, take my gold." + Colors.RESET;
+                }
                 printMessage += "\nYou won the brawl and receive "+ Colors.YELLOW + goldDiff + " gold."+ Colors.RESET;
                 hunter.changeGold(goldDiff);
             } else {
@@ -142,6 +168,7 @@ public class Town {
             }
         }
     }
+
 
     public boolean lookForTreasure(Hunter h) {
         if (hasTreasure) {
@@ -153,13 +180,16 @@ public class Town {
         } return false;
     }
 
+
     public String getTreasure() {
         return treasure;
     }
 
+
     public boolean hasTreasure() {
         return hasTreasure;
     }
+
 
     public int dig() {
         printMessage = "";
@@ -173,13 +203,16 @@ public class Town {
         } return 0;
     }
 
+
     public boolean isDug() {
         return dug;
     }
 
+
     public String toString() {
         return "This nice little town is surrounded by " + Colors.CYAN + terrain.getTerrainName() + Colors.RESET + ".";
     }
+
 
     /**
      * Determines the surrounding terrain for a town, and the item needed in order to cross that terrain.
@@ -202,6 +235,7 @@ public class Town {
             return new Terrain("Marsh", "Boots");
         }
     }
+
 
     /**
      * Determines whether a used item has broken.

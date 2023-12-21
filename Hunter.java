@@ -4,12 +4,14 @@
  * This code has been adapted from Ivan Turner's original program -- thank you Mr. Turner!
  */
 
+
 public class Hunter {
     //instance variables
     private String hunterName;
     private String[] kit;
     private int gold;
     private String[] treasure;
+
 
     /**
      * The base constructor of a Hunter assigns the name to the hunter and an empty kit.
@@ -24,14 +26,17 @@ public class Hunter {
         treasure = new String[3];
     }
 
+
     //Accessors
     public String getHunterName() {
         return hunterName;
     }
 
+
     public String[] getTreasures() {
         return treasure;
     }
+
 
     /**
      * Updates the amount of gold the hunter has.
@@ -46,6 +51,7 @@ public class Hunter {
         }
     }
 
+
     /**
      * Buys an item from a shop.
      *
@@ -54,14 +60,19 @@ public class Hunter {
      * @return true if the item is successfully bought.
      */
     public boolean buyItem(String item, int costOfItem) {
-        if (costOfItem == 0 || gold < costOfItem || hasItemInKit(item)) {
+        if (hasItemInKit("sword")) {
+            gold += costOfItem;
+        }
+        if (costOfItem == -1 || gold < costOfItem || hasItemInKit(item)) {
             return false;
         }
+
 
         gold -= costOfItem;
         addItem(item);
         return true;
     }
+
 
     /**
      * The Hunter is selling an item to a shop for gold.<p>
@@ -76,10 +87,12 @@ public class Hunter {
             return false;
         }
 
+
         gold += buyBackPrice;
         removeItemFromKit(item);
         return true;
     }
+
 
     /**
      * Removes an item from the kit by setting the index of the item to null.
@@ -89,11 +102,13 @@ public class Hunter {
     public void removeItemFromKit(String item) {
         int itmIdx = findItemInKit(item);
 
+
         // if item is found
         if (itmIdx >= 0) {
             kit[itmIdx] = null;
         }
     }
+
 
     /**
      * Checks to make sure that the item is not already in the kit.
@@ -111,6 +126,7 @@ public class Hunter {
         return false;
     }
 
+
     /**
      * Checks if the kit Array has the specified item.
      *
@@ -125,8 +141,10 @@ public class Hunter {
             }
         }
 
+
         return false;
     }
+
 
     /**
      * Returns a printable representation of the inventory, which
@@ -138,14 +156,17 @@ public class Hunter {
         String printableKit = "";
         String space = " ";
 
+
         for (String item : kit) {
             if (item != null) {
                 printableKit += item + space;
             }
         }
 
+
         return printableKit;
     }
+
 
     /**
      * @return A string representation of the hunter.
@@ -158,6 +179,7 @@ public class Hunter {
         return str;
     }
 
+
     public void addTreasure(String treas) {
         if (treas.equals("crown")) {
             treasure[0] = treas;
@@ -168,6 +190,7 @@ public class Hunter {
         }
     }
 
+
     public boolean hasTreasure(String treas) {
         for (String t: treasure) {
             if (t != null && t.equals(treas)) {
@@ -177,6 +200,7 @@ public class Hunter {
         return false;
     }
 
+
     public boolean hasAllTreasures() {
         for (String t: treasure) {
             if (t == null) {
@@ -185,6 +209,7 @@ public class Hunter {
         }
         return true;
     }
+
 
     public boolean hasShovel() {
         for (String item: kit) {
@@ -204,13 +229,16 @@ public class Hunter {
         for (int i = 0; i < kit.length; i++) {
             String tmpItem = kit[i];
 
+
             if (item.equals(tmpItem)) {
                 return i;
             }
         }
 
+
         return -1;
     }
+
 
     /**
      * Check if the kit is empty - meaning all elements are null.
@@ -224,8 +252,10 @@ public class Hunter {
             }
         }
 
+
         return true;
     }
+
 
     /**
      * Finds the first index where there is a null value.
@@ -239,6 +269,8 @@ public class Hunter {
             }
         }
 
+
         return -1;
     }
 }
+

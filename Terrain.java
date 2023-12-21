@@ -3,10 +3,12 @@
  * This code has been adapted from Ivan Turner's original program -- thank you Mr. Turner!
  */
 
+
 public class Terrain {
     // instance variables
     private String terrainName;
     private String neededItem;
+
 
     /**
      * Sets the class member variables
@@ -19,14 +21,17 @@ public class Terrain {
         neededItem = item.toLowerCase();
     }
 
+
     // accessors
     public String getTerrainName() {
         return terrainName;
     }
 
+
     public String getNeededItem() {
         return neededItem;
     }
+
 
     /**
      * Guards against a hunter crossing the zone without the proper item.
@@ -36,11 +41,17 @@ public class Terrain {
      * @return true if the Hunter has the proper item.
      */
     public boolean canCrossTerrain(Hunter hunter) {
+        if (getTerrainName() == "Jungle") {
+            if (hunter.hasItemInKit("sword")) {
+                return true;
+            }
+        }
         if (hunter.hasItemInKit(neededItem)) {
             return true;
         }
         return false;
     }
+
 
     /**
      * @return A string representation of the terrain and item to cross it.
@@ -49,3 +60,5 @@ public class Terrain {
         return Colors.CYAN + terrainName + Colors.RESET + " needs a(n) " + Colors.CYAN + neededItem + Colors.RESET + " to cross.";
     }
 }
+
+

@@ -1,11 +1,13 @@
 import java.awt.*;
 import java.util.Scanner;
 
+
 /**
  * The Shop class controls the cost of the items in the Treasure Hunt game. <p>
  * The Shop class also acts as a go between for the Hunter's buyItem() method. <p>
  * This code has been adapted from Ivan Turner's original program -- thank you Mr. Turner!
  */
+
 
 public class Shop {
     // constants
@@ -15,14 +17,19 @@ public class Shop {
     private static final int HORSE_COST = 12;
     private static final int BOAT_COST = 20;
     private static final int BOOTS_COST = 5;
+    private static final int SWORD_COST = 0;
     private static final int SHOVEL_COST = 8;
+
 
     // static variables
     private static final Scanner SCANNER = new Scanner(System.in);
 
+
     // instance variables
     private double markdown;
     private Hunter customer;
+    private boolean samuraiMode;
+
 
     /**
      * The Shop constructor takes in a markdown value and leaves customer null until one enters the shop.
@@ -32,7 +39,14 @@ public class Shop {
     public Shop(double markdown) {
         this.markdown = markdown;
         customer = null; // is set in the enter method
+        samuraiMode = false;
     }
+
+
+    public void samuraiMode() {
+        samuraiMode = true;
+    }
+
 
     /**
      * Method for entering the shop.
@@ -43,6 +57,7 @@ public class Shop {
     public void enter(Hunter hunter, String buyOrSell) {
         customer = hunter;
 
+
         if (buyOrSell.equals("b")) {
             System.out.println("Welcome to the shop! We have the finest wares in town.");
             System.out.println("Currently we have the following items:");
@@ -50,11 +65,15 @@ public class Shop {
             System.out.print("What're you lookin' to buy? ");
             String item = SCANNER.nextLine().toLowerCase();
             int cost = checkMarketPrice(item, true);
-            if (cost == 0) {
+            if (cost == -1) {
                 System.out.println("We ain't got none of those.");
+            } else if (customer.hasItemInKit("sword")) {
+                System.out.println("Your sword was so shiny that the shopkeeper couldn't see you stealing.");
+                buyItem(item);
             } else {
                 System.out.print("It'll cost you " + Colors.YELLOW + cost + Colors.RESET + " gold. Buy it (y/n)? ");
                 String option = SCANNER.nextLine().toLowerCase();
+
 
                 if (option.equals("y")) {
                     buyItem(item);
@@ -65,7 +84,7 @@ public class Shop {
             System.out.print("You currently have the following items: " + customer.getInventory());
             String item = SCANNER.nextLine().toLowerCase();
             int cost = checkMarketPrice(item, false);
-            if (cost == 0) {
+            if (cost == -1) {
                 System.out.println("We don't want none of those.");
             } else {
                 System.out.print("It'll get you " + Colors.YELLOW + cost + Colors.RESET + " gold. Sell it (y/n)? ");
@@ -77,6 +96,7 @@ public class Shop {
             }
         }
     }
+
 
     /**
      * A method that returns a string showing the items available in the shop
@@ -92,8 +112,12 @@ public class Shop {
         str += "Machete: " + MACHETE_COST + " gold\n";
         str += "Horse: " + HORSE_COST + " gold\n";
         str += "Boat: " + BOAT_COST + " gold\n";
+        if (samuraiMode) {
+            str += "Sword: " + SWORD_COST + " gold\n";
+        }
         return str;
     }
+
 
     /**
      * A method that lets the customer (a Hunter) buy an item.
@@ -103,11 +127,14 @@ public class Shop {
     public void buyItem(String item) {
         int costOfItem = checkMarketPrice(item, true);
         if (customer.buyItem(item, costOfItem)) {
-            System.out.println("Ye' got yerself a " + Colors.PURPLE + item + Colors.RESET + ". Come again soon.");
+            if (!customer.hasItemInKit("sword")) {
+                System.out.println("Ye' got yerself a " + Colors.PURPLE + item + Colors.RESET + ". Come again soon.");
+            }
         } else {
             System.out.println("Hmm, either you don't have enough gold or you've already got one of those!");
         }
     }
+
 
     /**
      * A pathway method that lets the Hunter sell an item.
@@ -123,6 +150,7 @@ public class Shop {
         }
     }
 
+
     /**
      * Determines and returns the cost of buying or selling an item.
      *
@@ -137,6 +165,7 @@ public class Shop {
             return getBuyBackCost(item);
         }
     }
+
 
     /**
      * Checks the item entered against the costs listed in the static variables.
@@ -157,12 +186,17 @@ public class Shop {
             return BOAT_COST;
         } else if (item.equals("boots")) {
             return BOOTS_COST;
+        } else if (item.equals("sword")) {
+            if (samuraiMode) {
+                return SWORD_COST;
+            } return -1;
         } else if (item.equals("shovel")) {
             return SHOVEL_COST;
         } else {
-            return 0;
+            return -1;
         }
     }
+
 
     /**
      * Checks the cost of an item and applies the markdown.
