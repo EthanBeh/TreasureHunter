@@ -73,6 +73,7 @@ public class TreasureHunter {
             String[] available = {"Water", "Rope", "Machete", "Horse", "Boat", "Boots"};
             for (String item: available) {
                 hunter.buyItem(item, 0);
+                hunter.hasSword();
             }
         } if (hard.equals("s")) {
             samuraiMode = true;
