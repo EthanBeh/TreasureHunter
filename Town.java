@@ -197,7 +197,9 @@ public class Town {
             if (hunter.hasShovel()) {
                 dug = true;
                 if (Math.random() >= 0.5) {
-                    return (int) (Math.random() * 20) + 1;
+                    int g = (int) (Math.random() * 20) + 1;
+                    hunter.changeGold(g);
+                    return g;
                 } return -1;
             } return -2;
         } return 0;

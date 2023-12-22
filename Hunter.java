@@ -122,8 +122,10 @@ public class Hunter {
     private boolean addItem(String item) {
         if (!hasItemInKit(item)) {
             int idx = emptyPositionInKit();
-            kit[idx] = item;
-            return true;
+            if (idx != -1) {
+                kit[idx] = item;
+                return true;
+            }
         }
         return false;
     }
@@ -270,8 +272,6 @@ public class Hunter {
                 return i;
             }
         }
-
-
         return -1;
     }
 }
