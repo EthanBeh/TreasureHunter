@@ -215,7 +215,7 @@ public class Hunter {
 
     public boolean hasShovel() {
         for (String item: kit) {
-            if (item.equals("shovel")) {
+            if (item != null && item.equals("shovel")) {
                 return true;
             }
         }

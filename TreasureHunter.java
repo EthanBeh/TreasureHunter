@@ -202,7 +202,7 @@ public class TreasureHunter {
             }
         } else if (choice.equals("d")) {
             int earned = currentTown.dig();
-            if (earned != 0 && earned != -1) {
+            if (earned != 0 && earned != -1 && earned != -2) {
                 System.out.println("You found " + earned + " gold");
             } else {
                 if (hunter.hasShovel()) {

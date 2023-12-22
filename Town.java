@@ -194,8 +194,8 @@ public class Town {
     public int dig() {
         printMessage = "";
         if (!dug) {
-            dug = true;
             if (hunter.hasShovel()) {
+                dug = true;
                 if (Math.random() >= 0.5) {
                     return (int) (Math.random() * 20) + 1;
                 } return -1;
