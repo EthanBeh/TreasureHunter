@@ -70,7 +70,7 @@ public class TreasureHunter {
             hunter.changeGold(10);
         } else if (hard.equals("test")) {
             hunter.changeGold(90);
-            String[] available = {"Water", "Rope", "Machete", "Horse", "Boat", "Boots"};
+            String[] available = {"water", "rope", "machete", "horse", "boat", "boots", "shovel"};
             for (String item: available) {
                 hunter.buyItem(item, 0);
             }
